@@ -47,7 +47,7 @@ document.addEventListener("mousemove", function (event) {
   );
 });
 
-const ws = new WebSocket("ws://localhost:8080");
+const ws = new WebSocket(`ws://${window.location.host}`);
 
 ws.addEventListener("open", function (event) {
   console.log("WebSocket connection established");
