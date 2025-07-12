@@ -110,6 +110,7 @@ server.on("request", (req, res) => {
 });
 node_cron_1.default.schedule("* * * * *", function () {
     dataBase = {};
+    console.log("DataBase cleared");
 });
 server.listen(8080, function () {
     console.log(new Date() + " Server is listening on port 8080");

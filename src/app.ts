@@ -95,6 +95,7 @@ server.on("request", (req, res) => {
 
 cron.schedule("* * * * *", function () {
   dataBase = {};
+  console.log("DataBase cleared");
 });
 
 server.listen(8080, function () {
