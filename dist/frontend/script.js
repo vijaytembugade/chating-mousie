@@ -28,21 +28,6 @@ document.addEventListener("DOMContentLoaded", function () {
   container.style.width = "fit-content";
   container.id = userId;
   input.focus();
-
-  input.addEventListener("input", function (event) {
-    input.focus();
-    ws.send(
-      JSON.stringify({
-        [userId]: {
-          user_id: userId,
-          message: event.target.value.trim(),
-          mouseX,
-          mouseY,
-          color,
-        },
-      })
-    );
-  });
 });
 
 input.addEventListener("keypress", function (event) {
@@ -71,6 +56,20 @@ document.addEventListener("mousemove", function (event) {
 
 ws.addEventListener("open", function (event) {
   console.log("WebSocket connection established");
+  input.focus();
+  input.addEventListener("input", function (event) {
+    ws.send(
+      JSON.stringify({
+        [userId]: {
+          user_id: userId,
+          message: event.target.value.trim(),
+          mouseX,
+          mouseY,
+          color,
+        },
+      })
+    );
+  });
 });
 
 ws.addEventListener("message", function (event) {
