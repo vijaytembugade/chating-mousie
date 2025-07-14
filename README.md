@@ -7,4 +7,10 @@ To start this project on local
 3. run `tsc`
 4. run `node ./dist/app.js`
 
-Frontend code is in default dist folder.
+Frontend code is in default dist/Frontend folder folder.
+
+## Deployed Link:
+
+https://chating-mousie.up.railway.app/
+
+Example:
