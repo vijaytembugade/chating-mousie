@@ -30,6 +30,12 @@ document.addEventListener("DOMContentLoaded", function () {
   input.focus();
 });
 
+document.addEventListener("visibilitychange", function () {
+  if (document.visibilityState === "visible") {
+    input.focus();
+  }
+});
+
 input.addEventListener("keypress", function (event) {
   input.focus();
 });
