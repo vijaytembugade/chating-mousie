@@ -34,41 +34,45 @@ input.addEventListener("keypress", function (event) {
   input.focus();
 });
 
+function mouseMoveHandler(event) {
+  input.focus();
+  mouseX = event.clientX;
+  mouseY = event.clientY;
+  container.style.left = `${mouseX + 10}px`;
+  container.style.top = `${mouseY + 10}px`;
+  container.style.position = "absolute";
+  ws.send(
+    JSON.stringify({
+      [userId]: {
+        user_id: userId,
+        message: input.value.trim(),
+        mouseX,
+        mouseY,
+        color,
+      },
+    })
+  );
+}
+
+function inputHandler(event) {
+  ws.send(
+    JSON.stringify({
+      [userId]: {
+        user_id: userId,
+        message: event.target.value.trim(),
+        mouseX,
+        mouseY,
+        color,
+      },
+    })
+  );
+}
+
 ws.addEventListener("open", function (event) {
   console.log("WebSocket connection established");
   input.focus();
-  input.addEventListener("input", function (event) {
-    ws.send(
-      JSON.stringify({
-        [userId]: {
-          user_id: userId,
-          message: event.target.value.trim(),
-          mouseX,
-          mouseY,
-          color,
-        },
-      })
-    );
-  });
-  document.addEventListener("mousemove", function (event) {
-    input.focus();
-    mouseX = event.clientX;
-    mouseY = event.clientY;
-    container.style.left = `${mouseX + 10}px`;
-    container.style.top = `${mouseY + 10}px`;
-    container.style.position = "absolute";
-    ws.send(
-      JSON.stringify({
-        [userId]: {
-          user_id: userId,
-          message: input.value.trim(),
-          mouseX,
-          mouseY,
-          color,
-        },
-      })
-    );
-  });
+  input.addEventListener("input", debounce(inputHandler, 200));
+  document.addEventListener("mousemove", debounce(mouseMoveHandler, 200));
 });
 
 ws.addEventListener("message", function (event) {
@@ -121,4 +125,12 @@ function createDynamicContainer(data) {
       }
     }
   }
+}
+
+function debounce(func, delay) {
+  let timeout;
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), delay);
+  };
 }
