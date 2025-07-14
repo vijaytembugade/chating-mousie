@@ -77,8 +77,8 @@ function inputHandler(event) {
 ws.addEventListener("open", function (event) {
   console.log("WebSocket connection established");
   input.focus();
-  input.addEventListener("input", debounce(inputHandler, 100));
-  document.addEventListener("mousemove", debounce(mouseMoveHandler, 20));
+  input.addEventListener("input", inputHandler);
+  document.addEventListener("mousemove", mouseMoveHandler);
 });
 
 ws.addEventListener("message", function (event) {
@@ -131,12 +131,4 @@ function createDynamicContainer(data) {
       }
     }
   }
-}
-
-function debounce(func, delay) {
-  let timeout;
-  return function (...args) {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(this, args), delay);
-  };
 }
