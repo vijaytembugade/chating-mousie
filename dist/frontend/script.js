@@ -34,26 +34,6 @@ input.addEventListener("keypress", function (event) {
   input.focus();
 });
 
-document.addEventListener("mousemove", function (event) {
-  input.focus();
-  mouseX = event.clientX;
-  mouseY = event.clientY;
-  container.style.left = `${mouseX + 10}px`;
-  container.style.top = `${mouseY + 10}px`;
-  container.style.position = "absolute";
-  ws.send(
-    JSON.stringify({
-      [userId]: {
-        user_id: userId,
-        message: input.value.trim(),
-        mouseX,
-        mouseY,
-        color,
-      },
-    })
-  );
-});
-
 ws.addEventListener("open", function (event) {
   console.log("WebSocket connection established");
   input.focus();
@@ -70,13 +50,31 @@ ws.addEventListener("open", function (event) {
       })
     );
   });
+  document.addEventListener("mousemove", function (event) {
+    input.focus();
+    mouseX = event.clientX;
+    mouseY = event.clientY;
+    container.style.left = `${mouseX + 10}px`;
+    container.style.top = `${mouseY + 10}px`;
+    container.style.position = "absolute";
+    ws.send(
+      JSON.stringify({
+        [userId]: {
+          user_id: userId,
+          message: input.value.trim(),
+          mouseX,
+          mouseY,
+          color,
+        },
+      })
+    );
+  });
 });
 
 ws.addEventListener("message", function (event) {
   const messageData = event.data;
   const { clientCount, ...rest } = JSON.parse(messageData);
   createDynamicContainer(rest);
-  input.focus();
 });
 
 function getRandomColor() {
