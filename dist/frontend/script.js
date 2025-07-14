@@ -1,8 +1,8 @@
 const container = document.getElementById("container");
 const input = document.getElementById("message");
 
-// const ws = new WebSocket(`wss://${window.location.host}`);
-const ws = new WebSocket(`ws://localhost:8080`);
+const ws = new WebSocket(`wss://${window.location.host}`);
+// const ws = new WebSocket(`ws://localhost:8080`);
 
 let userId;
 let mouseX;
