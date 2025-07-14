@@ -1,4 +1,4 @@
-This is a fun project to connect multiple socket connection for chating build with websockets and typescript, along with HTML and CSS.
+This is a fun project to connect multiple socket connection for chating , build with websockets and typescript, along with HTML and CSS.
 
 To start this project on local
 
@@ -13,4 +13,10 @@ Frontend code is in default dist/Frontend folder folder.
 
 https://chating-mousie.up.railway.app/
 
-Example:
+## Example:
+
+https://github.com/user-attachments/assets/a61f3757-9d84-4cfc-9f9c-7fea639ef590
+
+
+
+
