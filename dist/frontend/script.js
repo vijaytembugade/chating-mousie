@@ -1,5 +1,6 @@
 const container = document.getElementById("container");
 const input = document.getElementById("message");
+const clientCountDiv = document.getElementById("client-count");
 
 const ws = new WebSocket(`wss://${window.location.host}`);
 // const ws = new WebSocket(`ws://localhost:8080`);
@@ -85,6 +86,8 @@ ws.addEventListener("message", function (event) {
   const messageData = event.data;
   const { clientCount, ...rest } = JSON.parse(messageData);
   createDynamicContainer(rest);
+  console.log("clientCount", clientCount);
+  clientCountDiv.innerText = `Total Connected Clients: ${clientCount}`;
 });
 
 function getRandomColor() {

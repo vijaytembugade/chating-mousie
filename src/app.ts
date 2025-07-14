@@ -14,9 +14,7 @@ wss.on("connection", function connection(ws) {
   ws.on("message", function message(data, isBinary) {
     try {
       let messageObj = JSON.parse(data.toString());
-      // console.log("Message from client (object):", messageObj);
       dataBase = { ...dataBase, ...messageObj };
-      console.log("Data:", dataBase);
     } catch (err) {
       console.error("Failed to parse message from client:", err);
       return;
@@ -31,7 +29,7 @@ wss.on("connection", function connection(ws) {
     });
   });
 
-  ws.send(JSON.stringify({ ...dataBase, clientCount: wss.clients.size }));
+  ws.send(JSON.stringify({ ...dataBase, clientCount: wss.clients }));
 });
 
 import path from "path";

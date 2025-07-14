@@ -38,4 +38,9 @@
   font-size: 12px;
   text-decoration: none;
   font-family: "Poppins", sans-serif;
+  border-radius: 2px;
+  padding: 8px 16px;
+  box-shadow: 4px 4px 12px #bebebe, -4px -4px 12px #ffffff;
+  color: #333;
+  transition: box-shadow 0.2s;
 }
