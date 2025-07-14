@@ -1,6 +1,9 @@
 const container = document.getElementById("container");
 const input = document.getElementById("message");
 
+// const ws = new WebSocket(`wss://${window.location.host}`);
+const ws = new WebSocket(`ws://localhost:8080`);
+
 let userId;
 let mouseX;
 let mouseY;
@@ -25,6 +28,25 @@ document.addEventListener("DOMContentLoaded", function () {
   container.style.width = "fit-content";
   container.id = userId;
   input.focus();
+
+  input.addEventListener("input", function (event) {
+    input.focus();
+    ws.send(
+      JSON.stringify({
+        [userId]: {
+          user_id: userId,
+          message: event.target.value.trim(),
+          mouseX,
+          mouseY,
+          color,
+        },
+      })
+    );
+  });
+});
+
+input.addEventListener("keypress", function (event) {
+  input.focus();
 });
 
 document.addEventListener("mousemove", function (event) {
@@ -47,35 +69,16 @@ document.addEventListener("mousemove", function (event) {
   );
 });
 
-const ws = new WebSocket(`wss://${window.location.host}`);
-
 ws.addEventListener("open", function (event) {
   console.log("WebSocket connection established");
 });
 
 ws.addEventListener("message", function (event) {
   const messageData = event.data;
-  console.log("Message data from server:", JSON.parse(messageData));
-  createDynamicContainer(JSON.parse(messageData));
+  const { clientCount, ...rest } = JSON.parse(messageData);
+  createDynamicContainer(rest);
   input.focus();
 });
-
-if (input) {
-  input.addEventListener("keypress", function (event) {
-    input.focus();
-    ws.send(
-      JSON.stringify({
-        [userId]: {
-          user_id: userId,
-          message: input.value.trim(),
-          mouseX,
-          mouseY,
-          color,
-        },
-      })
-    );
-  });
-}
 
 function getRandomColor() {
   const r = Math.floor(Math.random() * 256);

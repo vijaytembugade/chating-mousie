@@ -23,13 +23,15 @@ wss.on("connection", function connection(ws) {
     }
     wss.clients.forEach(function each(client) {
       if (client !== ws && client.readyState === WebSocket.OPEN) {
-        console.log("Message Sent:", JSON.stringify(dataBase));
-        client.send(JSON.stringify(dataBase), { binary: isBinary });
+        client.send(
+          JSON.stringify({ ...dataBase, clientCount: wss.clients.size }),
+          { binary: isBinary }
+        );
       }
     });
   });
 
-  ws.send(JSON.stringify(dataBase));
+  ws.send(JSON.stringify({ ...dataBase, clientCount: wss.clients.size }));
 });
 
 import path from "path";

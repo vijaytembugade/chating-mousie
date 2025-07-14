@@ -48,12 +48,11 @@ wss.on("connection", function connection(ws) {
         }
         wss.clients.forEach(function each(client) {
             if (client !== ws && client.readyState === ws_1.default.OPEN) {
-                console.log("Message Sent:", JSON.stringify(dataBase));
-                client.send(JSON.stringify(dataBase), { binary: isBinary });
+                client.send(JSON.stringify(Object.assign(Object.assign({}, dataBase), { clientCount: wss.clients.size })), { binary: isBinary });
             }
         });
     });
-    ws.send(JSON.stringify(dataBase));
+    ws.send(JSON.stringify(Object.assign(Object.assign({}, dataBase), { clientCount: wss.clients.size })));
 });
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
