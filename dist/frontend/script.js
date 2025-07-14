@@ -77,8 +77,8 @@ function inputHandler(event) {
 ws.addEventListener("open", function (event) {
   console.log("WebSocket connection established");
   input.focus();
-  input.addEventListener("input", debounce(inputHandler, 200));
-  document.addEventListener("mousemove", debounce(mouseMoveHandler, 200));
+  input.addEventListener("input", debounce(inputHandler, 100));
+  document.addEventListener("mousemove", debounce(mouseMoveHandler, 20));
 });
 
 ws.addEventListener("message", function (event) {
